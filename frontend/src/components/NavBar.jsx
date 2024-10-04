@@ -1,8 +1,108 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { FaCode } from "react-icons/fa";
+import { Link } from 'react-router-dom';
+import Avtaar from 'react-avatar'
+import { GiHamburgerMenu } from "react-icons/gi";
+import { RxCross2 } from "react-icons/rx";
+import { MdLightMode } from "react-icons/md";
+import { TbLayoutGridFilled } from "react-icons/tb";
+import { useEffect } from 'react';
 
-const NavBar = () => {
+const NavBar = ({menu , setMenu}) => {
+
+  const [showtoggleMenu , setShowToggleMenu] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) { // Tailwind's 'md' breakpoint
+        setMenu(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    // Initial check
+    handleResize();
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  
+
+
+
   return (
-    <div>NavBar</div>
+    <div className=' bg-[#141414]  px-[10px] h-[80px] md:px-[100px] flex items-center justify-between'>
+
+       <div className='flex items-center gap-4 '>
+         <FaCode className='md:text-6xl text-4xl bg-sky-400 rounded-full p-[6px]'/>
+          <h1 className='md:text-3xl text-xl font-bold'>CODE NEXUS</h1>
+       </div>
+
+        {
+        menu &&
+        <div className='block md:hidden fixed top-0 left-0 bg-gray-800 opacity-80 h-screen w-full'></div>
+        }
+
+       {
+        showtoggleMenu &&
+        <div className='  fixed top-0 left-0 bg-gray-800 opacity-80 h-screen w-full'></div>
+       } 
+
+      
+       <div  className={`flex flex-row items-center absolute right-5  top-5 ${menu&& 'flex-col gap-5 '}`}>
+
+        <div className='block md:hidden text-xl '>
+         {menu ? <RxCross2 onClick={()=> setMenu(!menu)} /> :<GiHamburgerMenu onClick={()=>setMenu(!menu)} className={`${showtoggleMenu? 'hidden' : 'block'}`}/>} 
+        </div>
+
+        {  
+          showtoggleMenu ? <RxCross2 className='text-2xl block md:hidden' onClick={()=> setShowToggleMenu(!showtoggleMenu)}/> :
+          <Avtaar name='Ayush Rajput' size='40' round='50%' onClick={()=>setShowToggleMenu(!showtoggleMenu)}  className={`relative cursor-pointer mr-5 ml-2 md:hidden block ${menu&& 'hidden'} ${showtoggleMenu&&'hidden'}`}></Avtaar>
+        }
+      
+       
+      
+
+        { 
+         showtoggleMenu ? <RxCross2 className='text-2xl hidden md:block' onClick={()=> setShowToggleMenu(!showtoggleMenu)}/> :
+        
+         <div className={` md:flex  md:flex-row gap-4 items-center ${menu ? 'absolute right-24 top-14 flex flex-col':'hidden'}  `}>
+        
+          <Link>Home</Link>
+          <Link>About</Link>
+          <Link>Contact</Link>
+          <Link>Services</Link>   
+          <Avtaar name='Ayush Rajput' size='40' round='50%' onClick={()=>setShowToggleMenu(!showtoggleMenu)} className={`cursor-pointer ml-2 hidden md:block `}></Avtaar>
+                   
+         </div>    
+       }
+      
+
+       <div className={`absolute right-[15px] top-[80px] w-[150px] h-[150px] p-[10px] py-[14px] shadow-lg ${showtoggleMenu?'block' :'hidden'} `}>
+
+         <h2>Ayush Rajput </h2>
+         <div className='w-full bg-white h-[1px] my-4'></div>
+
+         <div className='flex items-center gap-2 my-2'>
+          <MdLightMode />
+          <h2>Light mode</h2>
+         </div>
+
+         <div className='flex items-center gap-2'>
+          <TbLayoutGridFilled />
+          <h2>Grid layout</h2>
+         </div>
+
+       </div>
+
+
+       </div>
+
+
+    </div>
   )
 }
 

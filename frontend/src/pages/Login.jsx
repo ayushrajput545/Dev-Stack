@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { FaCode } from "react-icons/fa";
-import rightimg from '../assets/signup-img.webp'
+import loginimg from '../assets/login-image.jpg'
 import {Link} from 'react-router-dom'
 
-const Signup = () => {
+const Login = () => {
 
   const[Data , setData] = useState({username:"" , name:'' , email:'' , password:''});
 
@@ -43,16 +43,14 @@ const Signup = () => {
 
            <div className='flex flex-col gap-6 my-6'>
             <input required type="text" placeholder='Username' name='username' onChange={changeHandler} value={Data.username} className='p-3 rounded outline-none bg-gray-800'/>
-            <input required type="text" placeholder='Name' name='name' onChange={changeHandler} value={Data.name} className='p-3 rounded outline-none bg-gray-800'/>
-            <input required type="email" placeholder='Email' name='email' onChange={changeHandler} value={Data.email} className='p-3 rounded outline-none bg-gray-800'/>
             <input required type="text" placeholder='Password' name='password' onChange={changeHandler} value={Data.password} className='p-3 rounded outline-none bg-gray-800'/>
            </div>
 
            <div className='my-3'>
-            <button className='bg-sky-400 w-full p-4 rounded text-xl' onClick={submitHandler}> Sign Up</button>
+            <button className='bg-sky-400 w-full p-4 rounded text-xl' onClick={submitHandler}>Login</button>
            </div>
 
-           <div className='w-full text-center'>Already have an account ?  <Link to='/login'>Login here</Link> </div>
+           <div className='w-full text-center'>Don't have an account ?  <Link to='/signup'>Signup here</Link> </div>
 
 
          </div>
@@ -60,7 +58,7 @@ const Signup = () => {
       {/* right div  */}
          <div className='md:w-1/2 md:h-full hidden md:block  py-11'>
 
-         <img src={rightimg} alt="" className='w-full h-full'/>
+         <img src={loginimg} alt="" className='w-full h-full'/>
 
          </div>
 
@@ -75,4 +73,4 @@ const Signup = () => {
   )
 }
 
-export default Signup
+export default Login
