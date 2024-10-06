@@ -17,7 +17,7 @@ const EditorNavbar = ({theme , setTheme}) => {
     </div>
 
     <div>
-       <FiDownload className={`cursor-pointer text-xl ${theme? 'text-white' : 'text-gray-400'} `} />
+       <FiDownload className={`cursor-pointer text-xl ${theme? 'text-white' : 'text-black bg-gray-400 w-[30px] h-[25px] rounded'} `} />
     </div>
 
     </div>
