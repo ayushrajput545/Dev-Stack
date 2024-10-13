@@ -7,7 +7,7 @@ const{auth} = require('../middlewares/auth');
 
 
 router.post('/signup' , signup);
-router.get('/login', login);
+router.post('/login', login);
 router.post('/createProject', auth, projects);
 router.get('/getAllprojects' ,auth,  getAllprojects);
 router.delete('/deleteProject/:id' ,auth, deleteProject);

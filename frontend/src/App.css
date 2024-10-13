@@ -1,6 +1,7 @@
  *{
   margin: 0;
   padding: 0;
+ 
   
  }
 
@@ -11,4 +12,5 @@
   overflow-x: hidden;
   background-color: #0D0C0C;
   color: white;
+   
  }

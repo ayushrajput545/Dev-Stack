@@ -22,7 +22,7 @@ exports.projects = async(req,res)=>{
         return res.status(200).json({
             success:true,
             message:"Project Created",
-            projects:updateProjects 
+            userDetails:updateProjects 
         })
 
 
@@ -40,15 +40,15 @@ exports.projects = async(req,res)=>{
 exports.getAllprojects = async(req,res)=>{  
     try{ 
 
-        const {id} = req.headers; // works when we pass users id in header , make sure body is none
+        const {userid} = req.headers; // works when we pass users id in header , make sure body is none
         
    
 
-        const userData =await User.findById(id).populate({path:'projects' , options:{sort:{createdAt:-1}}});
+        const userData =await User.findById(userid).populate({path:'projects' , options:{sort:{createdAt:-1}}});
 
         return res.status(200).json({
             success:true, 
-            allProjects:userData  
+            userDetails:userData  
         })
 
 
@@ -68,18 +68,16 @@ exports.getAllprojects = async(req,res)=>{
 exports.deleteProject = async(req,res)=>{
 
     try{
-        // const id = req.params.id;
+        const {id} = req.params;
         const {userid} = req.headers;
-
-        const{id}= req.body
 
         const deleteProject = await Project.findByIdAndDelete(id);
 
-        const updatedDetails = await User.findByIdAndUpdate(userid,{$pull:{projects:id}}, {new:true}).populate('projects').exec();
+       await User.findByIdAndUpdate(userid,{$pull:{projects:deleteProject._id}}, {new:true});
  
         return res.status(200).json({
             success:true, 
-            updatedDetails:updatedDetails 
+            message:"Task Deleted"
         })
     }
 

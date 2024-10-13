@@ -8,7 +8,7 @@ import { MdLightMode } from "react-icons/md";
 import { TbLayoutGridFilled } from "react-icons/tb";
 import { useEffect } from 'react';
 
-const NavBar = ({menu , setMenu}) => {
+const NavBar = ({menu , setMenu ,setGridLayout ,gridLayout , setTheme, theme,projectData}) => {
 
   const [showtoggleMenu , setShowToggleMenu] = useState(false);
 
@@ -34,11 +34,11 @@ const NavBar = ({menu , setMenu}) => {
 
 
   return (
-    <div className=' bg-[#141414]  px-[10px] h-[80px] md:px-[100px] flex items-center justify-between'>
+    <div className={` ${theme? 'bg-gray-200' : 'bg-[#141414] '} w-screen px-[10px] h-[80px] md:px-[100px] flex items-center justify-between`}>
 
        <div className='flex items-center gap-4 '>
          <FaCode className='md:text-6xl text-4xl bg-sky-400 rounded-full p-[6px]'/>
-          <h1 className='md:text-3xl text-xl font-bold'>CODE NEXUS</h1>
+          <h1 className={`md:text-3xl text-xl font-bold ${theme? 'text-gray-600' :'text-white'}`}>CODE NEXUS</h1>
        </div>
 
         {
@@ -55,11 +55,11 @@ const NavBar = ({menu , setMenu}) => {
        <div  className={`flex flex-row items-center absolute right-5  top-5 ${menu&& 'flex-col gap-5 '}`}>
 
         <div className='block md:hidden text-xl '>
-         {menu ? <RxCross2 onClick={()=> setMenu(!menu)} /> :<GiHamburgerMenu onClick={()=>setMenu(!menu)} className={`${showtoggleMenu? 'hidden' : 'block'}`}/>} 
+         {menu ? <RxCross2  onClick={()=> setMenu(!menu)} /> :<GiHamburgerMenu onClick={()=>setMenu(!menu)} className={`${showtoggleMenu? 'hidden' : 'block'} ${theme && 'text-gray-600'} ` }/>} 
         </div>
 
         {  
-          showtoggleMenu ? <RxCross2 className='text-2xl block md:hidden' onClick={()=> setShowToggleMenu(!showtoggleMenu)}/> :
+          showtoggleMenu ? <RxCross2 className='text-2xl cursor-pointer block md:hidden' onClick={()=> setShowToggleMenu(!showtoggleMenu)}/> :
           <Avtaar name='Ayush Rajput' size='40' round='50%' onClick={()=>setShowToggleMenu(!showtoggleMenu)}  className={`relative cursor-pointer mr-5 ml-2 md:hidden block ${menu&& 'hidden'} ${showtoggleMenu&&'hidden'}`}></Avtaar>
         }
       
@@ -69,7 +69,7 @@ const NavBar = ({menu , setMenu}) => {
         { 
          showtoggleMenu ? <RxCross2 className='text-2xl hidden md:block' onClick={()=> setShowToggleMenu(!showtoggleMenu)}/> :
         
-         <div className={` md:flex  md:flex-row gap-4 items-center ${menu ? 'absolute right-24 top-14 flex flex-col':'hidden'}  `}>
+         <div className={` md:flex  md:flex-row gap-4 items-center ${menu ? 'absolute right-24 top-14 flex flex-col':'hidden'} ${theme?  `${menu ? 'text-white':'text-gray-600'}` :'text-white'}`}>
         
           <Link>Home</Link>
           <Link>About</Link>
@@ -83,17 +83,36 @@ const NavBar = ({menu , setMenu}) => {
 
        <div className={`absolute right-[15px] top-[80px] w-[150px] h-[150px] p-[10px] py-[14px] shadow-lg ${showtoggleMenu?'block' :'hidden'} `}>
 
-         <h2>Ayush Rajput </h2>
+       {
+        projectData &&
+         <h2>{projectData.username}</h2>
+       }
+        
          <div className='w-full bg-white h-[1px] my-4'></div>
 
          <div className='flex items-center gap-2 my-2'>
           <MdLightMode />
-          <h2>Light mode</h2>
+          {
+            theme ? 
+            <h2 onClick={()=>{setTheme(false); setShowToggleMenu(!showtoggleMenu)}} className='cursor-pointer'>Dark mode</h2>
+            :
+            <h2 onClick={()=>{setTheme(true); setShowToggleMenu(!showtoggleMenu)}} className='cursor-pointer'>Light mode</h2>
+          }
+          
          </div>
 
-         <div className='flex items-center gap-2'>
-          <TbLayoutGridFilled />
-          <h2>Grid layout</h2>
+        
+         <div className='flex items-center gap-2 cursor-pointer'>
+             <TbLayoutGridFilled />
+          {
+            gridLayout ? 
+           
+             <h2 onClick={()=>setGridLayout(false)} >List layout</h2>
+             :
+             <h2 onClick={()=>setGridLayout(true)}>Grid layout</h2>
+          }
+         
+          
          </div>
 
        </div>

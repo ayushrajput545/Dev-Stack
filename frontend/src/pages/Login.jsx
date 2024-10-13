@@ -1,11 +1,22 @@
 import React, { useState } from 'react'
 import { FaCode } from "react-icons/fa";
 import loginimg from '../assets/login-image.jpg'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
+import toast from 'react-hot-toast';
+import axios from 'axios';
+import { useDispatch , useSelector} from 'react-redux';
+import { authActions } from '../components/redux/auth';
 
 const Login = () => {
 
   const[Data , setData] = useState({username:"" , name:'' , email:'' , password:''});
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isLoggedIn = useSelector((state)=>state.auth.isLoggedIn);
+  
+  // if(isLoggedIn){
+  //   navigate('/');
+  // }
 
   const changeHandler =(event)=>{
     const{name , value} = event.target;
@@ -17,9 +28,34 @@ const Login = () => {
     })
   }
 
-  function submitHandler(event){
-    event.preventDefault();
+ async function submitHandler(event){
+    // event.preventDefault();
     // console.log(Data);
+    try{
+
+      if(!Data.username || !Data.password){
+        toast.error("All fields are required");
+      }
+      else{
+
+        const response = await axios.post('http://localhost:3000/api/v1/login', Data);
+        console.log(response);
+        setData({username:"" , password:""});
+        localStorage.setItem("id" , response.data.id);
+        localStorage.setItem("token", response.data.token);
+        navigate('/'); 
+        dispatch(authActions.login());  
+           
+      }
+
+    }
+
+    catch(err){
+      // console.log(err);
+      // // toast.error(err.response.data.message);
+      // setData({username:"" , password:""});
+      // navigate('/signup')
+    }
   }
 
 

@@ -1,11 +1,23 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaCode } from "react-icons/fa";
 import rightimg from '../assets/signup-img.webp'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
+import axios from 'axios'
+import toast from 'react-hot-toast';
+import { useSelector } from 'react-redux';
+
+ 
 
 const Signup = () => {
 
   const[Data , setData] = useState({username:"" , name:'' , email:'' , password:''});
+  const navigate = useNavigate();
+  const isLoggedIn = useSelector((state)=>state.auth.isLoggedIn);
+  
+  if(isLoggedIn){
+    navigate('/');
+  }
+
 
   const changeHandler =(event)=>{
     const{name , value} = event.target;
@@ -17,14 +29,41 @@ const Signup = () => {
     })
   }
 
-  function submitHandler(event){
+ 
+
+  
+ async function submitHandler(event){
     event.preventDefault();
     // console.log(Data);
+
+    try{
+      const emailval= /\S+@\S+\.\S+/;
+      if(!Data.username || !Data.name || !Data.email || !Data.password){
+        toast.error("All fileds are required");
+      }
+        
+      else if(!emailval.test(Data.email)){
+        toast.error("Please enter valid email");
+      }
+
+      else if(Data.password.length<4){
+        toast.error("Password must have at least 4 charaters");
+      }
+      else{
+        const response = await axios.post(`http://localhost:3000/api/v1/signup`, Data);
+        // console.log(response);
+        toast.success('Account created! Please login');
+        navigate('/login');
+      }
+
+    }
+    catch(err){
+      console.log(err);
+      toast.error(err.response.data.message);
+      navigate('/login');
+    }
+
   }
-
-
-
-
   return (
     
          //Parent div
