@@ -5,6 +5,7 @@ import GridCard from '../components/GridCard';
 import ListCard from '../components/ListCard';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import useCode from '../components/useCode';
  
 
 const Home = () => {
@@ -12,11 +13,12 @@ const Home = () => {
   const[menu , setMenu] = useState(false);
   const[gridLayout , setGridLayout] = useState(false);
   const[createProject , setCreateProject] = useState(false);
-  const[isLayout , setIsLayout] = useState(true);
   const [Data , setData]= useState({title:""});
   const[projectData , setProjectData] = useState();
   const[theme , setTheme] = useState(false);
-
+  const{htmlCode , cssCode , jsCode } = useCode();  //custom hook
+  
+  
   useEffect(() => {
     document.body.style.backgroundColor = theme ? 'white' : '#0D0C0C';
   },[theme]);
@@ -26,6 +28,8 @@ const Home = () => {
     userid:localStorage.getItem("id"),
     authrization:localStorage.getItem("token")
   }
+
+   
 
   function changeHandler(event){
     const{name, value} = event.target;
@@ -45,8 +49,8 @@ const Home = () => {
         toast.error("Please fill the title");
       }
       else{
-        const response = await axios.post('http://localhost:3000/api/v1/createProject', Data ,{headers} );
-        // console.log(response);
+        const response = await axios.post('http://localhost:3000/api/v1/createProject',{title:Data.title, htmlCode,cssCode,jsCode}, {headers} );
+        console.log(response);
         setCreateProject(false); 
       }
 
@@ -79,7 +83,7 @@ const Home = () => {
   return (
     <> 
 
-        <NavBar menu={menu} setMenu={setMenu} setGridLayout={setGridLayout} gridLayout={gridLayout} setTheme={setTheme} theme={theme} projectData={projectData}/>
+        <NavBar  menu={menu} setMenu={setMenu} setGridLayout={setGridLayout} gridLayout={gridLayout} setTheme={setTheme} theme={theme} projectData={projectData}/>
         
         <div className={` px-[5px] md:px-[100px] my-8 flex justify-between items-center  }`}>
 
@@ -103,7 +107,7 @@ const Home = () => {
            {
           gridLayout?
           <div className='flex flex-wrap items-center gap-4 justify-center lg:justify-normal'>
-              <GridCard />
+              <GridCard projectData={projectData.projects} theme={theme}  setCreateProject={setCreateProject}/>
                
           </div>
         
@@ -123,22 +127,7 @@ const Home = () => {
 
         </div>
 
-        
-        
-      
-     
-      
-
  
-         
-      
-     
-
-       
-    
-      
-     
-        
 
     {/* Create prject  */}
 

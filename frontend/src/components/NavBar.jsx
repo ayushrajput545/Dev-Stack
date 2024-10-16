@@ -107,9 +107,9 @@ const NavBar = ({menu , setMenu ,setGridLayout ,gridLayout , setTheme, theme,pro
           {
             gridLayout ? 
            
-             <h2 onClick={()=>setGridLayout(false)} >List layout</h2>
+             <h2 onClick={()=> {setGridLayout(false); setShowToggleMenu(!showtoggleMenu)}} >List layout</h2>
              :
-             <h2 onClick={()=>setGridLayout(true)}>Grid layout</h2>
+             <h2 onClick={()=> {setGridLayout(true); setShowToggleMenu(!showtoggleMenu)}}>Grid layout</h2>
           }
          
           
