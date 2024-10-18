@@ -19,7 +19,7 @@ exports.auth= async(req,res,next)=>{
 
             const decode = jwt.verify(token , process.env.JWT_SECRET);
             req.user = decode;
-
+            next();
         }
         catch(err){
             console.log(err);
@@ -29,7 +29,7 @@ exports.auth= async(req,res,next)=>{
             })
 
         }
-        next();
+        
 
     }
     catch(err){

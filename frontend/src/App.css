@@ -8,7 +8,10 @@
   padding: 0;
   box-sizing: border-box;
   overflow-x: hidden;
-  background-color: #0D0C0C;
+ 
+  background-color: #142c37;
+  /* background-color: linear-gradient(to bottom right, #142c37,    #0D0C0C); */
   color: white;
+  
    
  }

@@ -1,16 +1,21 @@
 import React, { useState } from 'react'
-import { FaCode } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { LiaFreeCodeCamp } from "react-icons/lia";
+import { Link, useNavigate } from 'react-router-dom';
 import Avtaar from 'react-avatar'
 import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross2 } from "react-icons/rx";
 import { MdLightMode } from "react-icons/md";
 import { TbLayoutGridFilled } from "react-icons/tb";
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { authActions } from './redux/auth';
 
 const NavBar = ({menu , setMenu ,setGridLayout ,gridLayout , setTheme, theme,projectData}) => {
 
   const [showtoggleMenu , setShowToggleMenu] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -29,26 +34,35 @@ const NavBar = ({menu , setMenu ,setGridLayout ,gridLayout , setTheme, theme,pro
     };
   }, []);
 
+  function logoutHandler(){
+
+    dispatch(authActions.logout());
+    localStorage.clear("id");
+    localStorage.clear("token");
+    navigate('/login');
+
+  }
+
   
 
 
 
   return (
-    <div className={` ${theme? 'bg-gray-200' : 'bg-[#141414] '} w-screen px-[10px] h-[80px] md:px-[100px] flex items-center justify-between`}>
+    <div className={` ${theme? 'bg-gray-200' : ' bg-gradient-to-br from-[#142c37] to-[#0D0C0C] '} w-screen px-[10px] h-[80px] md:px-[100px] flex items-center justify-between`}>
 
-       <div className='flex items-center gap-4 '>
-         <FaCode className='md:text-6xl text-4xl bg-sky-400 rounded-full p-[6px]'/>
-          <h1 className={`md:text-3xl text-xl font-bold ${theme? 'text-gray-600' :'text-white'}`}>CODE NEXUS</h1>
-       </div>
+          <div className='flex items-center gap-2 '>
+             <LiaFreeCodeCamp  className='md:text-6xl text-5xl bg-teal-400 rounded-full p-[6px]'/>
+             <h1 className={` md:text-3xl text-2xl font-bold ${theme? 'text-gray-600' : 'text-white'}`}>DEV STACK</h1>
+           </div>
 
         {
         menu &&
-        <div className='block md:hidden fixed top-0 left-0 bg-gray-800 opacity-80 h-screen w-full'></div>
+        <div className='block md:hidden fixed top-0 left-0 bg-gray-900 opacity-80 h-screen w-full'></div>
         }
 
        {
         showtoggleMenu &&
-        <div className='  fixed top-0 left-0 bg-gray-800 opacity-80 h-screen w-full'></div>
+        <div className='  fixed top-0 md:top-4 right-0  bg-gradient-to-br from-[#142c37] to-[#0D0C0C] md:border border-teal-400 opacity-80 h-screen md:h-3/6 w-full md:w-2/6 lg:w-1/6 rounded-lg'></div>
        } 
 
       
@@ -59,8 +73,10 @@ const NavBar = ({menu , setMenu ,setGridLayout ,gridLayout , setTheme, theme,pro
         </div>
 
         {  
-          showtoggleMenu ? <RxCross2 className='text-2xl cursor-pointer block md:hidden' onClick={()=> setShowToggleMenu(!showtoggleMenu)}/> :
-          <Avtaar name='Ayush Rajput' size='40' round='50%' onClick={()=>setShowToggleMenu(!showtoggleMenu)}  className={`relative cursor-pointer mr-5 ml-2 md:hidden block ${menu&& 'hidden'} ${showtoggleMenu&&'hidden'}`}></Avtaar>
+       
+          showtoggleMenu  ? <RxCross2 className='text-2xl cursor-pointer block md:hidden' onClick={()=> setShowToggleMenu(!showtoggleMenu)}/> :
+           projectData &&
+          <Avtaar name={projectData.username} size='40' round='50%' onClick={()=>setShowToggleMenu(!showtoggleMenu)}  className={`relative cursor-pointer  ml-2 md:hidden block ${menu&& 'hidden'} ${showtoggleMenu&&'hidden'}`}></Avtaar>
         }
       
        
@@ -75,7 +91,11 @@ const NavBar = ({menu , setMenu ,setGridLayout ,gridLayout , setTheme, theme,pro
           <Link>About</Link>
           <Link>Contact</Link>
           <Link>Services</Link>   
-          <Avtaar name='Ayush Rajput' size='40' round='50%' onClick={()=>setShowToggleMenu(!showtoggleMenu)} className={`cursor-pointer ml-2 hidden md:block `}></Avtaar>
+          {
+            projectData &&
+             <Avtaar name={projectData.username} size='40' round='50%' onClick={()=>setShowToggleMenu(!showtoggleMenu)} className={`cursor-pointer mr-5 ml-2 hidden md:block `}></Avtaar>
+          }
+         
                    
          </div>    
        }
@@ -113,6 +133,10 @@ const NavBar = ({menu , setMenu ,setGridLayout ,gridLayout , setTheme, theme,pro
           }
          
           
+         </div>
+
+         <div>
+          <button onClick={logoutHandler} className='bg-gray-600 px-4 py-2 rounded-md my-4'>Log Out</button>
          </div>
 
        </div>
