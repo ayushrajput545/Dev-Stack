@@ -52,7 +52,7 @@ const Editoor = () => {
       try{
         
         
-        const response = await axios.put(`http://localhost:3000/api/v1/updatecode/${items._id}`, {htmlCode:htmlCode , cssCode:cssCode , jsCode:jsCode});
+        const response = await axios.put(`https://online-code-editor-tfye.onrender.com/api/v1/updatecode/${items._id}`, {htmlCode:htmlCode , cssCode:cssCode , jsCode:jsCode});
         // console.log(response);
 
       }

@@ -48,7 +48,7 @@ const Signup = () => {
         toast.error("Password must have at least 4 charaters");
       }
       else{
-        const response = await axios.post(`http://localhost:3000/api/v1/signup`, Data);
+        const response = await axios.post(`https://online-code-editor-tfye.onrender.com/api/v1/signup`, Data);
         // console.log(response);
         toast.success('Account created! Please login');
         navigate('/login');

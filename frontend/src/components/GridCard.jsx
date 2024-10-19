@@ -20,7 +20,7 @@ const GridCard = ({theme , setCreateProject, projectData}) => {
 
     try{
 
-     const response=  await axios.delete(`http://localhost:3000/api/v1/deleteProject/${id}` ,{headers});
+     const response=  await axios.delete(`https://online-code-editor-tfye.onrender.com/api/v1/deleteProject/${id}` ,{headers});
     //  console.log(response);
       setDeletion(false);
       

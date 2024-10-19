@@ -49,7 +49,7 @@ const Home = () => {
         toast.error("Please fill the title");
       }
       else{
-        const response = await axios.post('http://localhost:3000/api/v1/createProject',{title:Data.title, htmlCode,cssCode,jsCode}, {headers} );
+        const response = await axios.post('https://online-code-editor-tfye.onrender.com/api/v1/createProject',{title:Data.title, htmlCode,cssCode,jsCode}, {headers} );
         console.log(response);
         setCreateProject(false); 
       }
@@ -66,7 +66,7 @@ const Home = () => {
 
     async function fetch (){
       try{
-        const response = await axios.get('http://localhost:3000/api/v1/getAllprojects' ,{headers});
+        const response = await axios.get('https://online-code-editor-tfye.onrender.com/api/v1/getAllprojects' ,{headers});
         // console.log(response);
         setProjectData(response.data.userDetails);
       }
