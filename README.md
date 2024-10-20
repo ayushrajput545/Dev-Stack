@@ -4,7 +4,7 @@
 <br/>
 <br/>
 <p>This project includes-:</p>
-<br/>
+
 <p>React js and Tailwind css for frontend</p>
 <p>Mongo DB for Data Storage</p>
 <p>Express and Node js for backend</p>
