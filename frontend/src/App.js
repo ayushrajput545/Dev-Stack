@@ -14,9 +14,7 @@ function App() {
   const isLoggedIn = useSelector((state)=>state.auth.isLoggedIn);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-
-
+ 
   useEffect(()=>{
 
     if(localStorage.getItem('id') && localStorage.getItem('token')){

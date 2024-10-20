@@ -12,8 +12,6 @@ app.use(express.json());
 
 app.use('/api/v1', routes);
 
-
-
 dbConnect();
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`)  

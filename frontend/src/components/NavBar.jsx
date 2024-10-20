@@ -9,6 +9,7 @@ import { TbLayoutGridFilled } from "react-icons/tb";
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { authActions } from './redux/auth';
+import toast from 'react-hot-toast';
 
 const NavBar = ({menu , setMenu ,setGridLayout ,gridLayout , setTheme, theme,projectData}) => {
 
@@ -40,12 +41,9 @@ const NavBar = ({menu , setMenu ,setGridLayout ,gridLayout , setTheme, theme,pro
     localStorage.clear("id");
     localStorage.clear("token");
     navigate('/login');
+    toast.success("Logged Out");
 
   }
-
-  
-
-
 
   return (
     <div className={` ${theme? 'bg-gray-200' : ' bg-gradient-to-br from-[#142c37] to-[#0D0C0C] '} w-screen px-[10px] h-[80px] md:px-[100px] flex items-center justify-between`}>
@@ -57,7 +55,7 @@ const NavBar = ({menu , setMenu ,setGridLayout ,gridLayout , setTheme, theme,pro
 
         {
         menu &&
-        <div className='block md:hidden fixed top-0 left-0 bg-gray-900 opacity-80 h-screen w-full'></div>
+        <div className='block md:hidden fixed top-0 left-0 bg-gradient-to-br from-[#142c37] to-[#0D0C0C opacity-80 h-screen w-full'></div>
         }
 
        {
@@ -69,7 +67,7 @@ const NavBar = ({menu , setMenu ,setGridLayout ,gridLayout , setTheme, theme,pro
        <div  className={`flex flex-row items-center absolute right-5  top-5 ${menu&& 'flex-col gap-5 '}`}>
 
         <div className='block md:hidden text-xl '>
-         {menu ? <RxCross2  onClick={()=> setMenu(!menu)} /> :<GiHamburgerMenu onClick={()=>setMenu(!menu)} className={`${showtoggleMenu? 'hidden' : 'block'} ${theme && 'text-gray-600'} ` }/>} 
+         {menu ? <RxCross2  onClick={()=> setMenu(!menu)}  className={`text-2xl ${showtoggleMenu? 'hidden' : 'block'} ${theme && 'text-gray-600'} ` } /> :<GiHamburgerMenu onClick={()=> {setMenu(!menu)}} className={`${showtoggleMenu? 'hidden' : 'block'} ${theme && 'text-gray-600'} ` }/>} 
         </div>
 
         {  

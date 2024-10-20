@@ -6,6 +6,8 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useDispatch , useSelector} from 'react-redux';
 import { authActions } from '../components/redux/auth';
+import useCode from '../components/useCode';
+import Spinner from '../components/Spinner';
 
 const Login = () => {
 
@@ -13,6 +15,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state)=>state.auth.isLoggedIn);
+  const{loader,setLoader} = useCode(); // custom hook
   
   if(isLoggedIn){
     navigate('/');
@@ -31,15 +34,17 @@ const Login = () => {
  async function submitHandler(event){
     // event.preventDefault();
     // console.log(Data);
+      
     try{
 
       if(!Data.username || !Data.password){
         toast.error("All fields are required");
       }
       else{
-
+        setLoader(true);
         const response = await axios.post('https://online-code-editor-tfye.onrender.com/api/v1/login', Data);
-        console.log(response);
+        // console.log(response);
+        setLoader(false);
         setData({username:"" , password:""});
         localStorage.setItem("id" , response.data.id);
         localStorage.setItem("token", response.data.token);
@@ -67,8 +72,11 @@ const Login = () => {
       <div className='absolute top-8 '>
         <button onClick={()=>navigate('/editor')} className='md:text-2xl text-xl font-semibold bg-gray-600 py-2 px-3 rounded-lg ml-14 font-mono border border-teal-400'>Start Coding →</button>
       </div>
-     
-         {/* //Parent div */}
+
+      {
+        loader ? <Spinner/> :
+
+             
       <div className='w-screen  min-h-screen flex items-center justify-center bg-gradient-to-br from-[#142c37] to-[#0D0C0C]'>
 
         {/* This div contain left and right divs */}
@@ -88,7 +96,7 @@ const Login = () => {
            </div>
 
            <div className='my-3'>
-            <button className='bg-teal-400 w-full p-4 rounded text-xl' onClick={submitHandler}>Login</button>
+            <button className='bg-teal-400 w-full py-3 rounded text-xl' onClick={submitHandler}>Login</button>
            </div>
 
            <div className='w-full text-center'>Don't have an account ?  <Link to='/signup'>Signup here</Link> </div>
@@ -108,7 +116,10 @@ const Login = () => {
 
 
       </div>
-
+       
+      }
+     
+     
       </>
 
 

@@ -21,9 +21,7 @@ const EditorNavbar = ({theme , setTheme , items}) => {
     else{
       navigate('/');
     }
-
-
-
+    
   }
   return (
 
@@ -39,7 +37,7 @@ const EditorNavbar = ({theme , setTheme , items}) => {
           items ?
            <h2 className='font-bold  mx-6'>File/ <span className='font-semibold text-gray-400 '>{items.title}</span> </h2>
            :
-           <button onClick={clickHandler}  className='bg-teal-400 rounded-md w-12 text-3xl pb-2'>+</button>
+           <button onClick={clickHandler}  className='bg-teal-400 rounded-md w-12 text-3xl pb-1'>+</button>
         }
         
       </div>

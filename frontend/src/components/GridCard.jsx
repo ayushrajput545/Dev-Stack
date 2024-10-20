@@ -58,7 +58,7 @@ const GridCard = ({theme , setCreateProject, projectData}) => {
         <div className='flex items-center justify-between gap-5'>
 
             <div className='flex flex-col gap-3'>
-                <h2 className='font-semibold text-3xl'>{items.title}</h2>
+                <h2 className={`${theme? 'text-gray-600':'text-white'} font-semibold text-3xl`}>{items.title}</h2>
                 <p className='text-gray-500 text-sm'>{formattedDate}</p>
 
             </div>

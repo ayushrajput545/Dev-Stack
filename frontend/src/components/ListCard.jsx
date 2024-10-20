@@ -11,8 +11,6 @@ const ListCard = ({projectData ,theme,setCreateProject}) => {
   const[deleteId , setDeleteId] = useState();
   const navigate = useNavigate();
  
- 
-
   const headers ={
     userid:localStorage.getItem("id"),
     authrization:localStorage.getItem("token")
@@ -50,9 +48,7 @@ const ListCard = ({projectData ,theme,setCreateProject}) => {
         hour12: true ,
 
     });
-      
-      
-      
+        
     return (
       <> 
       <div  onClick={()=>navigate('/editor' , {state: {items:items}})} className={` flex items-center justify-between w-full my-5 p-[20px] shadow-lg  hover:shadow-gray-600 rounded-lg  ${theme ? 'bg-gray-200 hover:bg-gray-300' :' bg-gradient-to-br from-[#10232c] to-[#0D0C0C] hover:bg-[#202020]'}`}>
@@ -82,7 +78,7 @@ const ListCard = ({projectData ,theme,setCreateProject}) => {
     <div className={`flex flex-col gap-2 shadow-lg  hover:shadow-gray-600 rounded-lg items-center justify-center w-full my-5 md:text-3xl text-xl font-bold p-[20px]   ${theme ? 'bg-gray-200 hover:bg-gray-300' :'bg-gradient-to-br from-[#10232c] to-[#0D0C0C] hover:bg-[#202020]'}`}>
 
       <h1 className={`${theme? 'text-gray-600':'text-white'}`}>Add Project</h1>
-      <button onClick={()=>setCreateProject(true)} className='bg-teal-400 rounded-md w-12 text-3xl pb-2'>+</button>
+      <button onClick={()=>setCreateProject(true)} className='bg-teal-400 rounded-md w-12 text-3xl pb-1'>+</button>
 
     </div>
         

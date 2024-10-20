@@ -6,6 +6,7 @@ import { useState } from "react";
   const[htmlCode , sethtmlCode] = useState("<h1> Hello Dev Stack <h1/>");
   const[cssCode , setCssCode] = useState("h1{color:red}");
   const[jsCode , setJsCode] = useState("//some comment");
+  const[loader , setLoader]= useState(false);
   
 
   return{
@@ -15,6 +16,8 @@ import { useState } from "react";
     setCssCode,
     jsCode,
     setJsCode,
+    loader,
+    setLoader
    
   }
 }

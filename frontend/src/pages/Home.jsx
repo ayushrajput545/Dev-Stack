@@ -6,6 +6,7 @@ import ListCard from '../components/ListCard';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import useCode from '../components/useCode';
+import Spinner from '../components/Spinner';
  
 
 const Home = () => {
@@ -16,9 +17,11 @@ const Home = () => {
   const [Data , setData]= useState({title:""});
   const[projectData , setProjectData] = useState();
   const[theme , setTheme] = useState(false);
-  const{htmlCode , cssCode , jsCode } = useCode();  //custom hook
-  
-  
+  const{htmlCode , cssCode , jsCode ,loader,setLoader } = useCode();  //custom hook
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredProject , setFilteredProject]= useState([]);
+
+
   useEffect(() => {
     document.body.style.backgroundColor = theme ? 'white' : '#142c37';
   },[theme]);
@@ -30,7 +33,6 @@ const Home = () => {
   }
 
    
-
   function changeHandler(event){
     const{name, value} = event.target;
         setData((prev)=>{
@@ -41,6 +43,7 @@ const Home = () => {
         })
   }
 
+
   async function createProjectHandler(){
 
     try{
@@ -49,8 +52,10 @@ const Home = () => {
         toast.error("Please fill the title");
       }
       else{
+        
         const response = await axios.post('https://online-code-editor-tfye.onrender.com/api/v1/createProject',{title:Data.title, htmlCode,cssCode,jsCode}, {headers} );
-        console.log(response);
+        // console.log(response);
+      
         setCreateProject(false); 
       }
 
@@ -60,14 +65,17 @@ const Home = () => {
     }
   }
 
-  
-
+ 
+  //this have no dependencies thats why we make loader that will disappear in 2 sec 
   useEffect(()=>{
 
     async function fetch (){
+     
       try{
+        
         const response = await axios.get('https://online-code-editor-tfye.onrender.com/api/v1/getAllprojects' ,{headers});
         // console.log(response);
+       
         setProjectData(response.data.userDetails);
       }
       catch(err){
@@ -79,13 +87,34 @@ const Home = () => {
 
   })
 
+
+  //filter
+  useEffect(() => {
+
+    if(projectData){
+       if (searchQuery && projectData.projects) {
+        
+      const filtered = projectData.projects.filter(project =>
+        project.title.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredProject(filtered);
+    } else {
+      setFilteredProject(projectData.projects);
+    }
+    }   
+    
+  }, [searchQuery, projectData]);
+
    
   return (
     <> 
 
         <NavBar  menu={menu} setMenu={setMenu} setGridLayout={setGridLayout} gridLayout={gridLayout} setTheme={setTheme} theme={theme} projectData={projectData}/>
-        
-        <div className={` px-[10px] md:px-[100px] my-8 flex justify-between items-center  }`}>
+
+        {
+           !projectData? <Spinner/> :
+          <div>
+            <div className={` px-[10px] md:px-[100px] my-8 flex justify-between items-center  }`}>
 
         { projectData &&
            <h2 className={`text-md md:text-2xl ${theme? 'text-gray-600':'text-white'}`}>Hi , {projectData.name} <span className='text-lg md:text-4xl'>👋</span></h2>
@@ -93,21 +122,19 @@ const Home = () => {
          
 
           <div className='flex '>
-            <input type="text" placeholder='Search' className={`p-1 md:p-3 rounded-md outline-none   w-[150px] md:w-[300px] ${theme ? 'bg-gray-200' :'bg-gray-900'}`} />
-             <button onClick={()=>setCreateProject(true)} className='bg-teal-400 rounded-md w-12 text-3xl pb-2'>+</button>
+            <input type="text" onChange={(e)=>{setSearchQuery(e.target.value)}} value={searchQuery} placeholder='Search' className={`p-1 md:p-3 rounded-md outline-none   w-[150px] md:w-[300px] ${theme ? 'bg-gray-200' :'bg-gray-900'}`} />
+             <button onClick={()=>setCreateProject(true)} className='bg-teal-400 rounded-md w-12 text-3xl pb-1 '>+</button>
           </div>
 
         </div>
 
-     
-    
 
-       <div className="cards md:px-[100px] ">
+          <div className="cards md:px-[100px] ">
 
            {
           gridLayout?
           <div className='flex flex-wrap items-center gap-4 justify-center lg:justify-normal'>
-              <GridCard projectData={projectData.projects} theme={theme}  setCreateProject={setCreateProject}/>
+              <GridCard projectData={filteredProject} theme={theme}  setCreateProject={setCreateProject}/>
                
           </div>
         
@@ -117,7 +144,7 @@ const Home = () => {
           <div className='px-[10px]'>
             {
               projectData &&
-              <ListCard projectData={projectData.projects} setCreateProject={setCreateProject} theme={theme}/>        
+              <ListCard projectData={filteredProject} setCreateProject={setCreateProject} theme={theme} searchQuery={searchQuery}/>        
             }   
           </div>
            
@@ -126,9 +153,12 @@ const Home = () => {
         }
 
         </div>
-
- 
-
+        
+          </div>
+            
+          
+        }
+        
     {/* Create prject  */}
 
        {
@@ -154,10 +184,6 @@ const Home = () => {
         </div>
        }
        
-       
-
-
-
     </>
   )
 }
