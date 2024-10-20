@@ -5,10 +5,10 @@
 <br/>
 <p>This project includes-:</p>
 <br/>
-<p>React js and Tailwind css for frontend</p><br/>
-<p>Mongo DB for Data Storage</p><br/>
-<p>Express and Node js for backend</p><br/>
-<p>Axios for Api Testing</p><br/>
+<p>React js and Tailwind css for frontend</p>
+<p>Mongo DB for Data Storage</p>
+<p>Express and Node js for backend</p>
+<p>Axios for Api Testing</p>
 <p>JWT and bcrypt for user authentication</p>
 <br/>
 <br/>
@@ -24,4 +24,4 @@
 
 <br/>
 
-<h1>Here is Live Link <a href='https://devstackk.netlify.app/'>Click Here</a></h1>
+<h1>Here is Live Link-> <a href='https://devstackk.netlify.app/'>Click Here</a></h1>
