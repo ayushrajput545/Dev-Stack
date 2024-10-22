@@ -6,7 +6,7 @@ Dev Stack is an interactive online community platform designed for front-end dev
 ### Features
 - **Code Editing**: Real-time code editing with syntax highlighting.
 - **Project Management**: Create, edit, and delete projects easily.
-- **Community Sharing**: Share your projects with other users and explore their creations.
+- **Auto save**: Code will automatically saved in working project file.
 - **Live Preview**: Instantly see the results of your code in a live preview window.
 - **User Authentication**: Secure login and sign-up process to protect your projects.
 
@@ -52,9 +52,10 @@ If you want to run Dev Stack locally, follow these steps:
 - MongoDB installed and running.
 
 ### Clone the Repository
-```bash
+```
 git clone https://github.com/yourusername/dev-stack.git
 cd dev-stack
+```
 
 ## Contributing
 We welcome contributions! Please follow these steps:
